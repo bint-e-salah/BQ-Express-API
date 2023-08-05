@@ -20,10 +20,10 @@ const getAllBrands = async (req, res) => {
 
 const getBrandByName = async (req, res) => {
 
-    const { Name } = req.query
+    const { brandName } = req.query
     try {
         await connect(process.env.MONGO_URI)
-        const brand = await Brands.findOne({ Name })
+        const brand = await Brands.findOne({ brandName })
         res.json({ brand })
 
     } catch (error) {
@@ -34,10 +34,10 @@ const getBrandByName = async (req, res) => {
 }
 
 const createBrand = async (req, res) => {
-    const { Name, Image } = req.body
+    const { brandName, brandImage, brandCategory } = req.body
     try {
         await connect(process.env.MONGO_URI)
-        Brands.create({ Name, Image })
+        Brands.create({  brandName, brandImage, brandCategory })
         res.status(201).json({ message: "Success" })
 
     }
@@ -50,10 +50,10 @@ const createBrand = async (req, res) => {
 }
 
 const deleteBrand = async (req, res) => {
-    const { Name } = req.body
+    const { brandName } = req.body
     try {
         await connect(process.env.MONGO_URI)
-        await Brands.deleteOne({ Name })
+        await Brands.deleteOne({ brandName })
         res.json({ message: "Success" })
 
     } catch (error) {
@@ -65,10 +65,10 @@ const deleteBrand = async (req, res) => {
 
 const updateBrand = async (req, res) => {
 
-    const { _id, Name, Image } = req.body
+    const { _id, brandName, brandImage, brandCategory } = req.body
 
     const filter = { _id };
-    const update = { Name, Image };
+    const update = { brandName, brandImage, brandCategory };
 
     try {
         await connect(process.env.MONGO_URI)

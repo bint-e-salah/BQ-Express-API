@@ -1,8 +1,9 @@
 const {Schema, model} =require('mongoose')
 
 const ProductSchema = new Schema({
-    Name : {
+    name : {
         type : String,
+        unique: true,
         required : true
     }
     ,
@@ -18,6 +19,11 @@ const ProductSchema = new Schema({
     }
     ,
     category : {
+        type : String,
+        required :true
+    },
+     
+    thumbnail : {
         type : String,
         required :true
     }

@@ -2,15 +2,20 @@ const { Schema, model } = require('mongoose')
 
 const BrandSchema = new Schema(
     {
-        Name: {
+        brandName: {
             type: String,
             required: true,
             unique: true
         },
-        Image: {
+        brandImage: {
+            type: String,
+            required: true
+        },
+        brandCtegory: {
             type: String,
             required: true
         }
+        
     }
 )
 

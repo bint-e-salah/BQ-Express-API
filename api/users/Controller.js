@@ -5,8 +5,8 @@ require('dotenv').config()
 //const { sign } = require('jsonwebtoken')
 
 
-const Login = (req, res)=>{
-
+const Login = async(req, res)=>{
+    const { email, password } = req.body;
 
     res.json({
         message: "Working"
@@ -15,18 +15,35 @@ const Login = (req, res)=>{
 
 const Signup = async (req, res)=>{
     const { username, email, password } = req.body;
+   if(!username ||!email ||!password){
+    res.status(403).json({
+        message: "Missing reuired field"
+    })
+   }
+   else{
 
     try {
        
-         connect(process.env.MONGO_URI)
-         //consol.log("DB Connected")
+        await connect(process.env.MONGO_URI)
+        // consol.log("DB Connected")
         
-         await User.create({username, email, password})
-         console.log("Success")
+        const checkExist = await User.exists({ email: email })
+         
+        
 
-        res.json({
-            message: "Signed Up Done" 
-        })
+        if(checkExist){
+            res.json({
+                message: "This email Already Exists"
+            })
+        }
+        else{
+            await User.create({ username, email, password  })
+            res.status(201).json({
+                message: "You have signup Successfully"
+            })
+        }
+
+        
     } 
     
     catch (error) {
@@ -37,6 +54,8 @@ const Signup = async (req, res)=>{
 
     }
    
+   }
+ 
 }
 const geAlltUsers =  (req, res)=>{
     res.json({

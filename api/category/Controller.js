@@ -93,7 +93,9 @@ const checkExistingCat = await Category.exists({CategoryName })
 }
 
 const updateCategory =  async (req, res)=>{
-    const { CategoryName, CategoryImage } = req.body;
+    const { _id, CategoryName, CategoryImage } = req.body;
+
+    const filter = { _id };
     const update = { CategoryName, CategoryImage };
    
     try {
